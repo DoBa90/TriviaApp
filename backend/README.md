@@ -87,8 +87,127 @@ GET '/categories'
 '5' : "Entertainment",
 '6' : "Sports"}
 
-```
 
+GET '/questions'
+- Returns a list of question objects, success value, total number of questions, categories objects and total number of categories
+- Results are paginated in groups of 10. Include a request argument to choose page number, starting from 1.
+
+Sample: curl http://127.0.0.1:5000/questions
+{
+  "categories": [
+    "Science", 
+    "Art", 
+    "Geography", 
+    "History", 
+    "Entertainment", 
+    "Sports"
+  ], 
+  "currentCategory": 6, 
+  "questions": [
+    {
+      "answer": "Muhammad Ali", 
+      "category": 4, 
+      "difficulty": 1, 
+      "id": 9, 
+      "question": "What boxer's original name is Cassius Clay?"
+    },
+    {
+      "answer": "Escher", 
+      "category": 2, 
+      "difficulty": 1, 
+      "id": 16, 
+      "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
+    }
+  ], 
+  "success": true, 
+  "totalQuestions": 2
+
+```
+POST /questions/submit
+General:
+Creates a new question using the submitted question, answer, category and difficulty. 
+Returns a success value
+
+curl http://127.0.0.1:5000/questions/submit -X POST -d '{"question":"Where are the moon, "answer":"In universe", "category":1, "difficulty":1}'
+
+{
+  "success": true
+}
+
+DELETE /questions/<question_id>
+General:
+Deletes the question of the given ID if it exists. Returns success value.
+curl -X DELETE http://127.0.0.1:5000/questions/3
+
+{
+  "success": true
+}
+
+POST /questions/search
+- Getting questions based on a search term. 
+- Returns success value, a list of questions based on search term, total number of questions, categories objects
+- Results are paginated in groups of 10
+## Missing CURL and output
+Sample curl http://127.0.0.1:5000/questions/search -X POST -d '{"searchTerm": "Tom"}'
+
+GET /categories/<id_cat>/questions
+- Getting questions based on the given category id
+- Returns success value, a list of questions, total number of questions, categories objects
+
+Sample: curl http://127.0.0.1:5000/categories/2/questions
+
+{
+  "currentCategory": "Art", 
+  "questions": [
+    {
+      "answer": "Escher", 
+      "category": 2, 
+      "difficulty": 1, 
+      "id": 16, 
+      "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
+    }, 
+    {
+      "answer": "Mona Lisa", 
+      "category": 2, 
+      "difficulty": 3, 
+      "id": 17, 
+      "question": "La Giaconda is better known as what?"
+    }, 
+    {
+      "answer": "One", 
+      "category": 2, 
+      "difficulty": 4, 
+      "id": 18, 
+      "question": "How many paintings did Van Gogh sell in his lifetime?"
+    }, 
+    {
+      "answer": "Jackson Pollock", 
+      "category": 2, 
+      "difficulty": 2, 
+      "id": 19, 
+      "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
+    }, 
+    {
+      "answer": "Dominique", 
+      "category": 2, 
+      "difficulty": 1, 
+      "id": 24, 
+      "question": "How is your name"
+    }
+  ], 
+  "success": true, 
+  "totalQuestions": 5
+
+
+POST /quizzes
+- Getting question to play the quiz based on category and previous question parameters
+- Request Arguments: None
+- Returns: If all questions are answered, it returns a success value, if not it returns a randomized question and a success value
+## 2 Tests fixen
+## README vervollständigen mit CURL
+
+## letztes Beispiel durchgehen 
+## abort statements kontrollieren
 
 ## Testing
 To run the tests, run
@@ -98,3 +217,13 @@ createdb trivia_test
 psql trivia_test < trivia.psql
 python test_flaskr.py
 ```
+
+
+- init__.py
+  - Funktionen auf abort überprüfen
+  - letzte funktion schreiben
+- test_flask.py
+  - tests vollständig
+  - tests fixen
+- README
+  - mit CURL vervollständigen
